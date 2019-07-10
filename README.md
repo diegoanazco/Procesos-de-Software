@@ -24,6 +24,6 @@ Finalmente, utilizamos Android Studio, para poder crear nuestra aplicación Andr
 
 ## Autores 
 
-El proyecto se realizó como proyecto final del curso de Procesos de Software en la Universidad La Salle de Arequipa.
+El proyecto se realizó como proyecto final del curso de Procesos de Software en la Universidad La Salle - Arequipa.
 
 * **Diego Añazco** - *Alumno VI Ciclo, Universidad La Salle - Arequipa* - 
