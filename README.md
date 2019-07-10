@@ -14,6 +14,8 @@ Finalmente, utilizamos Android Studio, para poder crear nuestra aplicación Andr
 
 * Oracle 11g. 
 * Visual Studio 2017
+  - ODAC for Visual Studio 2017: Nos agrega una referencia para poder utlizar todos los comandos que Oracle tiene para su manejo en Visual Studio
+    - https://www.oracle.com/technetwork/topics/dotnet/downloads/odacmsidownloadvs2017-3806459.html
   - Package Newtonsoft.Json: Al crear un Web Service SOAP vemos que nos retorna código .xml, si nosotros consideramos mejor manejable el formato JSON, tenemos esta referencia del Visual para poder retornar un string JSON.
     - https://www.c-sharpcorner.com/UploadFile/ansh06031982/creating-web-services-in-net-which-returns-xml-and-json-dat/
   - Conveyor by Keyoti para Visual Studio 2017: Sirve para crear el Web Service no solo en el localhost, si no también en la IP del router en el que te encuentras conectado. 
