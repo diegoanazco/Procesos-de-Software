@@ -1,6 +1,7 @@
 # Aplicación Android usando Web Service SOAP enlazado a una BD Oracle.
 
 El siguiente proyecto tiene como fin crear una BD en Oracle 11g, vincularla a un Web Service y finalmente consumir el mismo desde una aplicación Android.
+**Nota: Los archivos del repositorio no contienen en su totalidad el proyecto, solo archivos importantes con su explicación para que funcione correctamente.**
 
 ## Comenzando
 
