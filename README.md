@@ -1,4 +1,4 @@
-# Android Studio usando Web Service .NET enlazada a una BD Oracle.
+# Aplicación Android usando Web Service .NET enlazada a una BD Oracle.
 
 _El siguiente proyecto tiene como fin crear una BD en Oracle 11g, vincularla a un Web Service y finalmente consumir el mismo desde una aplicación Android._
 
