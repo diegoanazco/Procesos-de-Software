@@ -36,7 +36,79 @@ string oradb = "DATA SOURCE=localhost:1521/xe;PERSIST SECURITY INFO=True;USER ID
 oc = new OracleConnection(oradb);
 oc.Open();
 ```
-  
+### WebService_Procedimientos:
+
+Como hemos podido ver en el .sql de procedimientos, tenemos un procedimiento para Insert, Update y Delete de la tabla Administrador y Clientes. 
+Más con el Select solo llamamos a la sentencia. Para retornar el Select usamos el comando "DataSet". 
+Para usar este comando necesitamos agregar una nueva referencia:
+```
+using System.Data;
+```
+Mientras si queremos retornar un string de formato JSON, tenemos que agregar la referencia que descargamos: 
+```
+using Newtonsoft.Json;
+```
+Comencemos a explicar un procedimiento que recibe parámetros (Insert,Update,Delete). Recordemos el procedimiento "NEW_ADMIN".
+```
+CREATE OR REPLACE PROCEDURE NEW_ADMIN(PV1 IN VARCHAR, PV2 IN VARCHAR) AS 
+BEGIN
+  INSERT INTO ADMINISTRADOR (USUARIO,CONTRASEÑA) VALUES (PV1,PV2);
+    EXCEPTION
+  WHEN NO_DATA_FOUND THEN DBMS_OUTPUT.PUT_LINE('ERROR');
+END;
+```
+Ahora utilizaremos este procedimiento en nuestro Web Service.
+* Usamos "OracleParameter" para poder crear un parametro que recibe nuestro procedimiento. Luego le damos el tipo de dato con "OracleDbType y finalmente lo asignamos al nombre de nuestro paramentro.
+* "OracleCommand" crea un nuevo comando, a este comando le damos el nombre de nuestro procedimiento en "CommandText", y posteriormente le indicamos que es un Procedure en "CommandType".
+* Finalmente con "Parameters.Add" le asignamos los valores de nuestros parametros creados en la parte de arriba.
+  - Tener en cuenta que "PV1" y "PV2" tienen el mismo nombre en el procedimiento en Oracle.
+* Ejecutamos el procedimiento con "ExecuteNonQuery".
+* Cerramos la conexión con "Dispose" y finalmente retornamos la respuesta en el formato JSON.
+
+```
+public string Admin_New_Pro(OracleConnection conn, string usuario, string contrasena)
+{
+  OracleParameter param_usuario = new OracleParameter();
+  param_usuario.OracleDbType = OracleDbType.Varchar2;
+  param_usuario.Value = usuario;
+
+  OracleParameter param_contrasena = new OracleParameter();
+  param_contrasena.OracleDbType = OracleDbType.Varchar2;
+  param_contrasena.Value = contrasena;
+
+  OracleCommand cmd = new OracleCommand();
+  cmd.Connection = conn;
+  cmd.CommandText = "NEW_ADMIN";
+  cmd.CommandType = System.Data.CommandType.StoredProcedure;
+  cmd.Parameters.Add("PV1", OracleDbType.Varchar2).Value = param_usuario.Value;
+  cmd.Parameters.Add("PV2", OracleDbType.Varchar2).Value = param_contrasena.Value;
+  cmd.ExecuteNonQuery();
+
+  string respuesta = "Administrador creado";
+  conn.Dispose();
+
+  return JsonConvert.SerializeObject(respuesta, Newtonsoft.Json.Formatting.Indented);
+}
+```
+A diferencia de un procedimiento con parametros, si nosotros queremos hacer un Select, utilizaremos un DataSet.
+* Al igual que el anterior creamos nuestro comando, sin embargo, la diferencia es que en "CommandText" le enviamos la sentencia del Select
+* El "CommandType" ahora es .Text.
+* Ahora creamos un DataSet. 
+* Con "OracleDataAdapter" le enviamos nuestro nuestro cmd, que es nuestro comando, finalmente guardamos en da, nuestro DataSet que se llama "ds"
+* Retornamos en formato JSON.
+```
+public string Admin_Select_Full_Pro(OracleConnection conn)
+{
+  OracleCommand cmd = new OracleCommand();
+  cmd.Connection = conn;
+  cmd.CommandText = "SELECT ID,USUARIO,CONTRASEÑA FROM ADMINISTRADOR";
+  cmd.CommandType = System.Data.CommandType.Text;
 
 
+  DataSet ds = new DataSet();
+  OracleDataAdapter da = new OracleDataAdapter(cmd);
+  da.Fill(ds);
 
+  return JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented);
+}
+```
