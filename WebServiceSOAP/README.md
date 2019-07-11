@@ -10,5 +10,5 @@ Para iniciar recomendamos instalar todo lo necesario para que la subida del Web 
 3) Instalar ***Conveyor by Keyoti for Visual Studio 2017***. Cuando desde nuestra aplicación Android llamemos a nuestro Web Service que se creará de manera local, Android no puede acceder a este localhost, para ello utilizamos esta extensión de Visual, que publica, aparte del localhost, el web service en la ip del router al que estes conectado. De esta manera podemos llamarlo desde la aplicación Android sin ningún problema. _El link de descarga se encuentra en el README del proyecto._
 
 
-### Pre-requisitos 📋
+### Pre-requisitos 
 
