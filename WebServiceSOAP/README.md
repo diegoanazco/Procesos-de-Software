@@ -112,3 +112,23 @@ public string Admin_Select_Full_Pro(OracleConnection conn)
   return JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented);
 }
 ```
+
+### WebService_Main:
+
+Para poder crear un nuevo método en nuestro Web Service, es con la sentencia: [WebMethod].
+* Como vemos al separar por clases tanto la conexión como los procedimientos, en este main del Web Service, solo las instanciamos.
+```
+[WebMethod]
+public string Admin_Login( string usuario, string contrasena)
+{
+    Oracle_conection conn = new Oracle_conection();
+    conn.EstablecerConnection();
+
+    Procedimientos pc = new Procedimientos();
+
+    return pc.Admin_Login_Pro(conn.GetConexion(),usuario,contrasena);
+
+}
+```
+
+
